@@ -1,0 +1,100 @@
+import pygame
+
+# Initialize pygame
+pygame.init()
+
+# Set the dimensions of the chessboard
+board_width = 8
+board_height = 8
+square_size = 64
+
+# Create the chessboard
+board = [[None for _ in range(board_width)] for _ in range(board_height)]
+
+# Define piece colors
+white = (255, 255, 255)
+black = (0, 0, 0)
+
+# Define piece images (replace with actual image paths)
+white_pawn = pygame.image.load("white_pawn.png")
+white_rook = pygame.image.load("white_rook.png")
+white_knight = pygame.image.load("white_knight.png")
+white_bishop = pygame.image.load("white_bishop.png")
+white_queen = pygame.image.load("white_queen.png")
+white_king = pygame.image.load("white_king.png")
+black_pawn = pygame.image.load("black_pawn.png")
+black_rook = pygame.image.load("black_rook.png")
+black_knight = pygame.image.load("black_knight.png")
+black_bishop = pygame.image.load("black_bishop.png")
+black_queen = pygame.image.load("black_queen.png")
+black_king = pygame.image.load("black_king.png")
+
+# Create the game window
+screen = pygame.display.set_mode((board_width * square_size, board_height * square_size))
+pygame.display.set_caption("Chess")
+
+# Function to draw the chessboard
+def draw_board():
+    for row in range(board_height):
+        for col in range(board_width):
+            color = white if (row + col) % 2 == 0 else black
+            pygame.draw.rect(screen, color, (col * square_size, row * square_size, square_size, square_size))
+
+# Function to place pieces on the board
+def place_pieces():
+    # Place white pawns
+    for col in range(board_width):
+        board[1][col] = "white_pawn"
+
+    # Place black pawns
+    for col in range(board_width):
+        board[6][col] = "black_pawn"
+
+    # Place other pieces (rooks, knights, bishops, queen, king)
+    board[0][0] = "white_rook"
+    board[0][7] = "white_rook"
+    board[0][1] = "white_knight"
+    board[0][6] = "white_knight"
+    board[0][2] = "white_bishop"
+    board[0][5] = "white_bishop"
+    board[0][3] = "white_queen"
+    board[0][4] = "white_king"
+
+    board[7][0] = "black_rook"
+    board[7][7] = "black_rook"
+    board[7][1] = "black_knight"
+    board[7][6] = "black_knight"
+    board[7][2] = "black_bishop"
+    board[7][5] = "black_bishop"
+    board[7][3] = "black_queen"
+    board[7][4] = "black_king"
+
+# Function to draw pieces on the board
+def draw_pieces():
+    for row in range(board_height):
+        for col in range(board_width):
+            piece = board[row][col]
+            if piece:
+                if piece == "white_pawn":
+                    screen.blit(white_pawn, (col * square_size, row * square_size))
+                elif piece == "white_rook":
+                    screen.blit(white_rook, (col * square_size, row * square_size))
+                # ... (add other piece blitting here)
+
+# Game loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Draw the chessboard and pieces
+    draw_board()
+    draw_pieces()
+
+    # Handle player input (implement move logic here)
+
+    pygame.display.flip()
+
+# Quit pygame
+pygame.quit()
